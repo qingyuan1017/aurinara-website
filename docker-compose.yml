@@ -1,0 +1,13 @@
+services:
+  aurinara:
+    build: .
+    container_name: aurinara
+    ports:
+      - "8080:4173"
+    networks:
+      - network1
+
+networks:
+  network1:
+    name: lsio
+    external: true
