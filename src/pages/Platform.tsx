@@ -1,5 +1,6 @@
 import CapabilityCard from "../components/CapabilityCard";
 import SectionHeader from "../components/SectionHeader";
+import Reveal from "../components/Reveal";
 import { useLanguage } from "../i18n";
 
 export default function Platform() {
@@ -7,94 +8,98 @@ export default function Platform() {
 
   return (
     <>
-      <section className="px-5 py-24 lg:px-8">
-        <div className="mx-auto max-w-7xl">
-          <SectionHeader
-            eyebrow={t("platform.capabilities.eyebrow")}
-            title={t("platform.capabilities.title")}
-            description={t("platform.capabilities.description")}
-          />
+      <section className="px-5 pt-20 pb-16 lg:px-8">
+        <div className="mx-auto max-w-6xl">
+          <Reveal>
+            <SectionHeader
+              eyebrow={t("platform.capabilities.eyebrow")}
+              title={t("platform.capabilities.title")}
+              description={t("platform.capabilities.description")}
+            />
+          </Reveal>
 
-          <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {content.capabilities.map((item) => (
-              <CapabilityCard
-                key={item.id}
-                icon={item.icon}
-                title={item.title}
-                text={item.text}
-              />
+          <div className="mt-14 grid gap-x-12 gap-y-12 md:grid-cols-2 lg:grid-cols-3">
+            {content.capabilities.map((item, i) => (
+              <Reveal key={item.id} delay={(i % 3) * 0.08}>
+                <CapabilityCard
+                  icon={item.icon}
+                  title={item.title}
+                  text={item.text}
+                />
+              </Reveal>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="px-5 py-20 lg:px-8">
-        <div className="mx-auto max-w-7xl">
-          <SectionHeader
-            eyebrow={t("platform.deliverables.eyebrow")}
-            title={t("platform.deliverables.title")}
-            description={t("platform.deliverables.description")}
-          />
+      <section className="border-t border-teal-900/10 px-5 py-20 lg:px-8">
+        <div className="mx-auto max-w-6xl">
+          <Reveal>
+            <SectionHeader
+              eyebrow={t("platform.deliverables.eyebrow")}
+              title={t("platform.deliverables.title")}
+              description={t("platform.deliverables.description")}
+            />
+          </Reveal>
 
-          <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-            {content.deliverables.map((item) => {
+          <div className="mt-14 grid gap-x-12 gap-y-12 md:grid-cols-2 lg:grid-cols-4">
+            {content.deliverables.map((item, i) => {
               const Icon = item.icon;
 
               return (
-                <div
-                  key={item.id}
-                  className="rounded-3xl border border-white/10 bg-white/[0.04] p-6"
-                >
-                  <Icon className="mb-5 h-8 w-8 text-cyan-300" />
+                <Reveal key={item.id} delay={(i % 4) * 0.08}>
+                  <div className="border-t border-teal-900/15 pt-5">
+                    <Icon className="h-7 w-7 text-sage-600" strokeWidth={1.5} />
 
-                  <h3 className="text-xl font-semibold">{item.title}</h3>
+                    <h3 className="font-display mt-4 text-lg text-teal-900">
+                      {item.title}
+                    </h3>
 
-                  <p className="mt-3 text-sm leading-7 text-slate-300">
-                    {item.text}
-                  </p>
-                </div>
+                    <p className="mt-2 text-sm leading-7 text-teal-900/70">
+                      {item.text}
+                    </p>
+                  </div>
+                </Reveal>
               );
             })}
           </div>
         </div>
       </section>
 
-      <section className="px-5 py-20 lg:px-8">
-        <div className="mx-auto max-w-7xl rounded-[2rem] border border-white/10 bg-white/[0.05] p-8 lg:p-12">
-          <div className="grid gap-8 lg:grid-cols-2 lg:items-center">
-            <div>
-              <div className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-cyan-300">
-                {t("platform.architecture.eyebrow")}
-              </div>
-
-              <h2 className="text-4xl font-semibold tracking-tight">
-                {t("platform.architecture.title")}
-              </h2>
-
-              <p className="mt-5 leading-8 text-slate-300">
-                {t("platform.architecture.description")}
-              </p>
+      <section className="border-t border-teal-900/10 px-5 py-20 lg:px-8">
+        <div className="mx-auto grid max-w-6xl gap-x-16 gap-y-10 lg:grid-cols-[0.85fr_1.15fr]">
+          <Reveal>
+            <div className="flex items-center gap-3 text-sm text-sage-600">
+              <span className="h-px w-8 bg-sage-500/60" aria-hidden />
+              <span className="italic">{t("platform.architecture.eyebrow")}</span>
             </div>
 
-            <div className="grid gap-4">
+            <h2 className="font-display mt-4 text-4xl leading-[1.1] text-teal-900">
+              {t("platform.architecture.title")}
+            </h2>
+
+            <p className="mt-5 leading-8 text-teal-900/70">
+              {t("platform.architecture.description")}
+            </p>
+          </Reveal>
+
+          <Reveal delay={0.1}>
+            <ol className="divide-y divide-teal-900/10 border-t border-teal-900/10">
               {[
                 t("platform.architecture.layer1"),
                 t("platform.architecture.layer2"),
                 t("platform.architecture.layer3"),
                 t("platform.architecture.layer4"),
               ].map((item, index) => (
-                <div
-                  key={index}
-                  className="rounded-2xl border border-white/10 bg-slate-950/60 p-5"
-                >
-                  <div className="mb-2 text-sm text-cyan-300">
-                    Layer {index + 1}
-                  </div>
-                  <div className="text-lg font-semibold">{item}</div>
-                </div>
+                <li key={index} className="flex items-baseline gap-6 py-5">
+                  <span className="font-display text-sm text-gold-500">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <span className="text-lg text-teal-900">{item}</span>
+                </li>
               ))}
-            </div>
-          </div>
+            </ol>
+          </Reveal>
         </div>
       </section>
     </>

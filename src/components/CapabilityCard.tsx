@@ -12,14 +12,12 @@ export default function CapabilityCard({
   text,
 }: CapabilityCardProps) {
   return (
-    <div className="h-full rounded-3xl border border-white/10 bg-white/[0.04] p-6 shadow-xl shadow-slate-950/20">
-      <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-slate-950">
-        <Icon className="h-6 w-6" />
-      </div>
+    <div className="group h-full border-t border-teal-900/15 pt-5">
+      <Icon className="h-6 w-6 text-sage-600 transition group-hover:text-teal-800" strokeWidth={1.5} />
 
-      <h3 className="text-xl font-semibold tracking-tight">{title}</h3>
+      <h3 className="font-display mt-4 text-xl text-teal-900">{title}</h3>
 
-      <p className="mt-3 leading-7 text-slate-300">{text}</p>
+      <p className="mt-2 leading-7 text-teal-900/70">{text}</p>
     </div>
   );
 }

@@ -1,4 +1,6 @@
 import { Mail, MapPin, MessageSquare, Phone } from "lucide-react";
+import Reveal from "../components/Reveal";
+import BrandGraphic from "../components/BrandGraphic";
 import { useLanguage } from "../i18n";
 
 export default function Contact() {
@@ -11,119 +13,97 @@ export default function Contact() {
     { icon: MessageSquare, titleKey: "contact.info.bestFit.title" as const, textKey: "contact.info.bestFit.text" as const },
   ];
 
+  const field =
+    "w-full border-0 border-b border-teal-900/20 bg-transparent px-0 py-2 text-teal-900 outline-none transition placeholder:text-teal-900/30 focus:border-teal-700";
+  const labelClass =
+    "mb-1 block text-xs uppercase tracking-[0.14em] text-teal-900/55";
+
   return (
-    <>
-      <section className="px-5 py-24 lg:px-8">
-        <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.9fr_1.1fr]">
-          <div>
-            <div className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-cyan-300">
-              {t("contact.header.eyebrow")}
-            </div>
+    <section className="relative overflow-hidden px-5 pt-20 pb-24 lg:px-8">
+      <BrandGraphic className="pointer-events-none absolute right-4 top-10 hidden h-32 w-32 opacity-70 lg:block" />
 
-            <h1 className="text-5xl font-semibold tracking-tight sm:text-6xl">
-              {t("contact.header.title")}
-            </h1>
+      <div className="relative mx-auto grid max-w-6xl gap-x-16 gap-y-14 lg:grid-cols-[0.95fr_1.05fr]">
+        <Reveal>
+          <div className="flex items-center gap-3 text-sm text-sage-600">
+            <span className="h-px w-8 bg-sage-500/60" aria-hidden />
+            <span className="italic">{t("contact.header.eyebrow")}</span>
+          </div>
 
-            <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-300">
-              {t("contact.header.description")}
-            </p>
+          <h1 className="font-display mt-5 text-5xl leading-[1.05] text-teal-900 sm:text-6xl">
+            {t("contact.header.title")}
+          </h1>
 
-            <div className="mt-10 grid gap-4">
-              {contactInfoItems.map((item) => {
-                const Icon = item.icon;
+          <p className="mt-6 max-w-xl text-lg leading-8 text-teal-900/70">
+            {t("contact.header.description")}
+          </p>
 
-                return (
-                  <div
-                    key={item.titleKey}
-                    className="flex gap-4 rounded-2xl border border-white/10 bg-white/[0.04] p-4"
-                  >
-                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-cyan-300 text-slate-950">
-                      <Icon className="h-5 w-5" />
-                    </div>
+          <dl className="mt-12 divide-y divide-teal-900/10 border-t border-teal-900/10">
+            {contactInfoItems.map((item) => {
+              const Icon = item.icon;
 
-                    <div>
-                      <div className="font-semibold">{t(item.titleKey)}</div>
-                      <div className="mt-1 text-sm text-slate-300">
-                        {t(item.textKey)}
-                      </div>
-                    </div>
+              return (
+                <div key={item.titleKey} className="flex gap-4 py-4">
+                  <Icon className="mt-0.5 h-5 w-5 shrink-0 text-sage-600" strokeWidth={1.5} />
+                  <div>
+                    <dt className="font-medium text-teal-900">{t(item.titleKey)}</dt>
+                    <dd className="mt-0.5 text-sm text-teal-900/65">{t(item.textKey)}</dd>
                   </div>
-                );
-              })}
+                </div>
+              );
+            })}
+          </dl>
+        </Reveal>
+
+        <Reveal delay={0.1} className="lg:pt-2">
+          <form className="grid gap-7">
+            <div>
+              <label className={labelClass}>{t("contact.form.nameLabel")}</label>
+              <input className={field} placeholder={t("contact.form.namePlaceholder")} />
             </div>
-          </div>
 
-          <div className="rounded-[2rem] border border-white/10 bg-white/[0.05] p-6 lg:p-8">
-            <form className="grid gap-5">
-              <div>
-                <label className="mb-2 block text-sm font-medium text-slate-200">
-                  {t("contact.form.nameLabel")}
-                </label>
-                <input
-                  className="w-full rounded-2xl border border-white/10 bg-slate-950/70 px-4 py-3 text-white outline-none transition placeholder:text-slate-600 focus:border-cyan-300"
-                  placeholder={t("contact.form.namePlaceholder")}
-                />
-              </div>
+            <div>
+              <label className={labelClass}>{t("contact.form.emailLabel")}</label>
+              <input type="email" className={field} placeholder={t("contact.form.emailPlaceholder")} />
+            </div>
 
-              <div>
-                <label className="mb-2 block text-sm font-medium text-slate-200">
-                  {t("contact.form.emailLabel")}
-                </label>
-                <input
-                  type="email"
-                  className="w-full rounded-2xl border border-white/10 bg-slate-950/70 px-4 py-3 text-white outline-none transition placeholder:text-slate-600 focus:border-cyan-300"
-                  placeholder={t("contact.form.emailPlaceholder")}
-                />
-              </div>
+            <div>
+              <label className={labelClass}>{t("contact.form.orgLabel")}</label>
+              <input className={field} placeholder={t("contact.form.orgPlaceholder")} />
+            </div>
 
-              <div>
-                <label className="mb-2 block text-sm font-medium text-slate-200">
-                  {t("contact.form.orgLabel")}
-                </label>
-                <input
-                  className="w-full rounded-2xl border border-white/10 bg-slate-950/70 px-4 py-3 text-white outline-none transition placeholder:text-slate-600 focus:border-cyan-300"
-                  placeholder={t("contact.form.orgPlaceholder")}
-                />
-              </div>
+            <div>
+              <label className={labelClass}>{t("contact.form.interestLabel")}</label>
+              <select className={field}>
+                <option>{t("contact.form.interest.sdtm")}</option>
+                <option>{t("contact.form.interest.adam")}</option>
+                <option>{t("contact.form.interest.tlf")}</option>
+                <option>{t("contact.form.interest.sap")}</option>
+                <option>{t("contact.form.interest.platform")}</option>
+              </select>
+            </div>
 
-              <div>
-                <label className="mb-2 block text-sm font-medium text-slate-200">
-                  {t("contact.form.interestLabel")}
-                </label>
-                <select className="w-full rounded-2xl border border-white/10 bg-slate-950/70 px-4 py-3 text-white outline-none transition focus:border-cyan-300">
-                  <option>{t("contact.form.interest.sdtm")}</option>
-                  <option>{t("contact.form.interest.adam")}</option>
-                  <option>{t("contact.form.interest.tlf")}</option>
-                  <option>{t("contact.form.interest.sap")}</option>
-                  <option>{t("contact.form.interest.platform")}</option>
-                </select>
-              </div>
+            <div>
+              <label className={labelClass}>{t("contact.form.messageLabel")}</label>
+              <textarea
+                rows={5}
+                className={`${field} resize-none`}
+                placeholder={t("contact.form.messagePlaceholder")}
+              />
+            </div>
 
-              <div>
-                <label className="mb-2 block text-sm font-medium text-slate-200">
-                  {t("contact.form.messageLabel")}
-                </label>
-                <textarea
-                  rows={6}
-                  className="w-full resize-none rounded-2xl border border-white/10 bg-slate-950/70 px-4 py-3 text-white outline-none transition placeholder:text-slate-600 focus:border-cyan-300"
-                  placeholder={t("contact.form.messagePlaceholder")}
-                />
-              </div>
+            <button
+              type="button"
+              className="mt-2 justify-self-start rounded-md bg-teal-800 px-6 py-3 font-medium text-canvas transition hover:bg-teal-900"
+            >
+              {t("contact.form.submit")}
+            </button>
 
-              <button
-                type="button"
-                className="rounded-full bg-cyan-300 px-7 py-3 font-semibold text-slate-950 transition hover:bg-cyan-200"
-              >
-                {t("contact.form.submit")}
-              </button>
-
-              <p className="text-xs leading-6 text-slate-500">
-                {t("contact.form.disclaimer")}
-              </p>
-            </form>
-          </div>
-        </div>
-      </section>
-    </>
+            <p className="text-xs leading-6 text-teal-900/45">
+              {t("contact.form.disclaimer")}
+            </p>
+          </form>
+        </Reveal>
+      </div>
+    </section>
   );
 }

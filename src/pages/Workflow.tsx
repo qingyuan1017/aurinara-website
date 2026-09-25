@@ -1,5 +1,6 @@
-import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { motion } from "framer-motion";
 import SectionHeader from "../components/SectionHeader";
+import Reveal from "../components/Reveal";
 import { useLanguage } from "../i18n";
 
 export default function Workflow() {
@@ -7,69 +8,80 @@ export default function Workflow() {
 
   return (
     <>
-      <section className="px-5 py-24 lg:px-8">
-        <div className="mx-auto max-w-7xl">
-          <SectionHeader
-            eyebrow={t("workflowPage.header.eyebrow")}
-            title={t("workflowPage.header.title")}
-            description={t("workflowPage.header.description")}
-          />
+      <section className="px-5 pt-20 pb-16 lg:px-8">
+        <div className="mx-auto max-w-6xl">
+          <Reveal>
+            <SectionHeader
+              eyebrow={t("workflowPage.header.eyebrow")}
+              title={t("workflowPage.header.title")}
+              description={t("workflowPage.header.description")}
+            />
+          </Reveal>
 
-          <div className="mt-14 grid gap-5">
+          {/* Vertical timeline */}
+          <ol className="mt-16 max-w-3xl">
             {content.workflowSteps.map((step, index) => (
-              <div
-                key={step.id}
-                className="grid gap-5 rounded-3xl border border-white/10 bg-white/[0.04] p-6 lg:grid-cols-[auto_1fr_auto] lg:items-center"
-              >
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-cyan-300 text-lg font-bold text-slate-950">
-                  {index + 1}
-                </div>
+              <li key={step.id} className="relative flex gap-8 pb-10 last:pb-0">
+                {/* connecting line draws itself in */}
+                {index < content.workflowSteps.length - 1 && (
+                  <motion.span
+                    className="absolute left-[1.4rem] top-12 bottom-0 w-px origin-top bg-teal-900/15"
+                    aria-hidden
+                    initial={{ scaleY: 0 }}
+                    whileInView={{ scaleY: 1 }}
+                    viewport={{ once: true, margin: "-80px" }}
+                    transition={{ duration: 0.5, delay: 0.15 + index * 0.1 }}
+                  />
+                )}
 
-                <div>
-                  <h3 className="text-2xl font-semibold tracking-tight">
+                <motion.span
+                  className="font-display relative z-10 flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-teal-900/15 bg-[#f7f4ec] text-lg text-teal-800"
+                  initial={{ scale: 0, opacity: 0 }}
+                  whileInView={{ scale: 1, opacity: 1 }}
+                  viewport={{ once: true, margin: "-80px" }}
+                  transition={{ duration: 0.4, delay: index * 0.1, ease: "backOut" }}
+                >
+                  {index + 1}
+                </motion.span>
+
+                <Reveal delay={index * 0.1} y={12} className="pt-1">
+                  <h3 className="font-display text-2xl leading-tight text-teal-900">
                     {step.title}
                   </h3>
-                  <p className="mt-2 leading-7 text-slate-300">{step.text}</p>
-                </div>
-
-                {index < content.workflowSteps.length - 1 && (
-                  <ArrowRight className="hidden h-6 w-6 text-slate-500 lg:block" />
-                )}
-              </div>
+                  <p className="mt-2 leading-7 text-teal-900/70">{step.text}</p>
+                </Reveal>
+              </li>
             ))}
-          </div>
+          </ol>
         </div>
       </section>
 
-      <section className="px-5 py-20 lg:px-8">
-        <div className="mx-auto max-w-7xl rounded-[2rem] border border-cyan-300/20 bg-cyan-300/10 p-8 lg:p-12">
-          <div className="grid gap-10 lg:grid-cols-2">
-            <div>
-              <div className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-cyan-300">
-                {t("workflowPage.validation.eyebrow")}
-              </div>
-
-              <h2 className="text-4xl font-semibold tracking-tight">
-                {t("workflowPage.validation.title")}
-              </h2>
-
-              <p className="mt-5 leading-8 text-slate-300">
-                {t("workflowPage.validation.description")}
-              </p>
+      <section className="border-t border-teal-900/10 px-5 py-20 lg:px-8">
+        <div className="mx-auto grid max-w-6xl gap-x-16 gap-y-10 lg:grid-cols-[0.85fr_1.15fr]">
+          <Reveal className="border-l-2 border-gold-400 pl-6">
+            <div className="text-sm italic text-sage-600">
+              {t("workflowPage.validation.eyebrow")}
             </div>
 
-            <div className="grid gap-3">
-              {[1, 2, 3, 4, 5, 6].map((n) => (
-                <div
-                  key={n}
-                  className="flex items-start gap-3 rounded-2xl border border-white/10 bg-slate-950/50 p-4"
-                >
-                  <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-cyan-300" />
-                  <span className="text-slate-200">{t(`workflowPage.validation.item${n}`)}</span>
-                </div>
-              ))}
-            </div>
-          </div>
+            <h2 className="font-display mt-3 text-4xl leading-[1.1] text-teal-900">
+              {t("workflowPage.validation.title")}
+            </h2>
+
+            <p className="mt-5 leading-8 text-teal-900/70">
+              {t("workflowPage.validation.description")}
+            </p>
+          </Reveal>
+
+          <ul className="grid gap-x-10 gap-y-4 sm:grid-cols-2">
+            {[1, 2, 3, 4, 5, 6].map((n, i) => (
+              <li key={n}>
+                <Reveal delay={(i % 2) * 0.08} y={12} className="flex gap-3 text-teal-900/80">
+                  <span className="mt-3 h-px w-4 shrink-0 bg-sage-500" aria-hidden />
+                  <span className="leading-7">{t(`workflowPage.validation.item${n}`)}</span>
+                </Reveal>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
     </>

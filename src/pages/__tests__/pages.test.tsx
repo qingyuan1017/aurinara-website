@@ -10,11 +10,33 @@ import Workflow from '../Workflow';
 import Trust from '../Trust';
 import Contact from '../Contact';
 
-vi.mock('framer-motion', () => ({
-  motion: {
-    div: ({ children, ...props }: any) => <div {...props}>{children}</div>,
-  },
-}));
+vi.mock('framer-motion', async () => {
+  const React = await import('react');
+
+  const passthrough = (tag: string) =>
+    ({ children, ...props }: any) => {
+      // Drop framer-only props so React doesn't warn about unknown attributes.
+      const {
+        initial, animate, whileInView, whileHover, whileTap, exit,
+        transition, viewport, variants, ...rest
+      } = props;
+      void initial; void animate; void whileInView; void whileHover;
+      void whileTap; void exit; void transition; void viewport; void variants;
+      return React.createElement(tag, rest, children);
+    };
+
+  const motion = new Proxy(
+    {},
+    { get: (_target, tag: string) => passthrough(tag) }
+  );
+
+  return {
+    motion,
+    AnimatePresence: ({ children }: any) => children,
+    useInView: () => true,
+    useReducedMotion: () => false,
+  };
+});
 
 function renderWithProviders(ui: React.ReactElement, { language = 'en' } = {}) {
   const storage: Record<string, string> = { [STORAGE_KEY]: language };

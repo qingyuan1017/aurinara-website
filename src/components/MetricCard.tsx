@@ -5,9 +5,9 @@ type MetricCardProps = {
 
 export default function MetricCard({ value, label }: MetricCardProps) {
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
-      <div className="text-xl font-semibold text-white">{value}</div>
-      <div className="mt-1 text-xs text-slate-400">{label}</div>
+    <div className="border-t border-teal-900/15 pt-3">
+      <div className="font-display text-3xl text-teal-900">{value}</div>
+      <div className="mt-1 text-xs leading-5 text-teal-900/55">{label}</div>
     </div>
   );
 }

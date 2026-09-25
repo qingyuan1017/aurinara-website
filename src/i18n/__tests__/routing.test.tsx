@@ -7,12 +7,35 @@ import { STORAGE_KEY } from '../config';
 import App from '../../App';
 import Header from '../../layout/Header';
 
-// Mock framer-motion to avoid animation issues in tests
-vi.mock('framer-motion', () => ({
-  motion: {
-    div: ({ children, ...props }: any) => <div {...props}>{children}</div>,
-  },
-}));
+// Mock framer-motion to avoid animation issues in tests. A generic proxy renders
+// any motion.<tag> (div, span, svg, path, circle, ...) as its plain element and
+// strips animation-only props so React doesn't warn.
+vi.mock('framer-motion', async () => {
+  const React = await import('react');
+
+  const passthrough = (tag: string) =>
+    ({ children, ...props }: any) => {
+      const {
+        initial, animate, whileInView, whileHover, whileTap, exit,
+        transition, viewport, variants, ...rest
+      } = props;
+      void initial; void animate; void whileInView; void whileHover;
+      void whileTap; void exit; void transition; void viewport; void variants;
+      return React.createElement(tag, rest, children);
+    };
+
+  const motion = new Proxy(
+    {},
+    { get: (_target, tag: string) => passthrough(tag) }
+  );
+
+  return {
+    motion,
+    AnimatePresence: ({ children }: any) => children,
+    useInView: () => true,
+    useReducedMotion: () => false,
+  };
+});
 
 // Mock localStorage
 let storage: Record<string, string> = {};

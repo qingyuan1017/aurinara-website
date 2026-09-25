@@ -24,8 +24,8 @@ export default function LanguageSwitcher({ variant }: LanguageSwitcherProps) {
             aria-current={isActive ? "true" : undefined}
             className={`rounded-full px-3 py-1.5 text-sm font-medium transition ${
               isActive
-                ? "border border-cyan-300 bg-cyan-300/10 font-bold text-cyan-300"
-                : "border border-transparent text-slate-400 hover:text-white hover:bg-white/10"
+                ? "border border-teal-700 bg-teal-700/10 font-bold text-teal-800"
+                : "border border-transparent text-slate-500 hover:text-teal-800 hover:bg-teal-900/5"
             }`}
           >
             {LANGUAGE_LABELS[lang]}

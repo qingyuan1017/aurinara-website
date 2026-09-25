@@ -1,16 +1,57 @@
 @import "tailwindcss";
 
+@theme {
+  --font-serif: "Fraunces", ui-serif, Georgia, "Times New Roman", serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+    sans-serif;
+
+  --color-teal-50: #eef4f5;
+  --color-teal-100: #d3e2e5;
+  --color-teal-200: #a7c5cc;
+  --color-teal-300: #6fa0aa;
+  --color-teal-400: #3f7d89;
+  --color-teal-500: #256170;
+  --color-teal-600: #1a4f5d;
+  --color-teal-700: #123f4c;
+  --color-teal-800: #0f3641;
+  --color-teal-900: #0d2e38;
+
+  --color-sage-50: #f1f5f1;
+  --color-sage-100: #dfe8df;
+  --color-sage-200: #c1d2c1;
+  --color-sage-300: #9db69d;
+  --color-sage-400: #7fa07f;
+  --color-sage-500: #6b9080;
+  --color-sage-600: #567567;
+  --color-sage-700: #445d52;
+
+  --color-gold-50: #fdf7e9;
+  --color-gold-100: #faedc8;
+  --color-gold-200: #f4dc95;
+  --color-gold-300: #eecb6a;
+  --color-gold-400: #e8c477;
+  --color-gold-500: #d9ad4f;
+
+  --color-canvas: #fbfaf6;
+}
+
 :root {
   font-family:
-    Inter,
+    "Inter",
     ui-sans-serif,
     system-ui,
     -apple-system,
     BlinkMacSystemFont,
     "Segoe UI",
     sans-serif;
-  color: white;
-  background: #020617;
+  color: #0d2e38;
+  background-color: #f7f4ec;
+  /* faint warm paper grain so flat fills don't read as sterile */
+  background-image: radial-gradient(
+    rgba(13, 46, 56, 0.02) 1px,
+    transparent 1px
+  );
+  background-size: 4px 4px;
 }
 
 html {
@@ -25,4 +66,16 @@ body {
 
 * {
   box-sizing: border-box;
+}
+
+/* Display headings use the serif; keep default weight airy, not bold */
+.font-display {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+::selection {
+  background: #e8c477;
+  color: #0d2e38;
 }
